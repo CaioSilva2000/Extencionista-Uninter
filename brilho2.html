@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Brincos • Veridiana Quirino</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="./brincos.css">
+</head>
+
+<body>
+  <main class="screen" role="main">
+
+    <div class="topbar">
+      <a class="back" href="index.html">← Menu</a>
+      <button class="back" id="openCartTop" type="button">
+        Carrinho <span class="badge" id="cartCountTop">0</span>
+      </button>
+    </div>
+
+    <header class="brand" style="padding-top:14px;">
+      <img class="brand__logo" src="imagens/logo_2.png" alt="Veridiana Quirino Semijoias" />
+      <select class="category-select" onchange="trocarCategoria(this.value)">
+        <option value="" disabled selected>Selecione a categoria</option>
+        <option value="brincos">Brincos</option>
+        <option value="tornozeleiras">Tornozeleiras</option>
+        <option value="colares">Colares</option>
+        <option value="pulseiras">Pulseiras</option>
+        <option value="exclusivos">Exclusivos</option>
+      </select>
+    </header>
+
+    <h2 class="page-title">Brincos</h2>
+    <p class="page-sub">TOQUE NO PRODUTO PARA VER A FOTO E OS DETALHES</p>
+
+    <section class="catalog" id="catalog"></section>
+
+    <button class="fab" id="openCartFab" type="button">
+      🛍️ Carrinho <span class="badge" id="cartCountFab">0</span>
+    </button>
+
+    <!-- Modal -->
+    <div class="overlay" id="overlay">
+      <div class="modal" role="dialog" aria-modal="true" aria-label="Detalhes do produto">
+        <div style="position:relative;">
+          <img class="modal__img" id="modalImg" alt="">
+          <button class="close" id="closeModal" type="button">✕</button>
+        </div>
+
+        <div class="modal__content">
+          <div class="modal__title" id="modalTitle"></div>
+          <div class="modal__row"><span>ID</span><span id="modalId"></span></div>
+          <div class="modal__row"><span>Material</span><span id="modalMaterial"></span></div>
+          <div class="modal__price" id="modalPrice"></div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="addToCartBtn" type="button">Adicionar ao carrinho</button>
+          <button class="btn btn-outline" id="continueBtn" type="button">Continuar olhando</button>
+          <a class="btn btn-whats" id="buyWhatsBtn" target="_blank" rel="noopener">Reservar pelo WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drawer -->
+    <div class="drawer" id="drawer">
+      <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Carrinho">
+        <div class="drawer__title">Seu carrinho</div>
+        <p class="note">
+          Adicione peças e continue olhando. Para reservar, finalize pelo WhatsApp com a mensagem automática.
+        </p>
+
+        <div id="cartList"></div>
+
+        <div class="total">
+          <span>Total</span>
+          <span id="cartTotal">R$ 0,00</span>
+        </div>
+
+        <div class="actions" style="padding:0;">
+          <a class="btn btn-whats" id="checkoutWhats" target="_blank" rel="noopener">Finalizar reserva pelo WhatsApp</a>
+          <button class="btn btn-outline" id="closeCart" type="button">Continuar olhando</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer" aria-label="Rodapé">
+      <div class="footer__brand">
+        <span class="footer__name">Veridiana <strong>Quirino</strong></span>
+        <span class="footer__tag">semijoias</span>
+      </div>
+    </footer>
+  </main>
+
+  <!-- IMPORTANTE: data primeiro, app depois -->
+  <script src="data/brincos.js"></script>
+  <script src="./app.js"></script>
+  <script>
+    initCatalog();
+  </script>
+</body>
+</html>
