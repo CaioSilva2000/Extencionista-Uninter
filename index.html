@@ -1,93 +1,148 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
+  <!-- Define o charset para suportar acentos corretamente -->
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Brincos • Veridiana Quirino</title>
 
+  <!-- Deixa a página responsiva no celular -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Título da aba do navegador -->
+  <title>Home • Veridiana Quirino</title>
+
+  <!-- Otimiza carregamento das fontes do Google (pré-conexão) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Importa as fontes usadas no design (Playfair e Montserrat) -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="./brincos.css">
+  <!-- Importa o CSS específico dessa página (style) -->
+  <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
+  <!-- Conteúdo principal da tela (boa prática semântica + acessibilidade) -->
   <main class="screen" role="main">
 
-    <div class="topbar">
-      <a class="back" href="index.html">← Menu</a>
-      <button class="back" id="openCartTop" type="button">
-        Carrinho <span class="badge" id="cartCountTop">0</span>
+    <!-- NAVBAR (menu na extrema esquerda, logo centralizada e carrinho na direita) -->
+    <header class="nav-top">
+      <!-- Navegação/Menu (extrema esquerda) -->
+      <a class="nav-top__menu" href="index.html" aria-label="Voltar ao menu">☰</a>
+
+      <!-- Logo centralizada (fica no meio da barra) -->
+      <div class="nav-top__brand" aria-label="Marca">
+        <img class="nav-top__logo" src="imagens/logo_2.png" alt="Veridiana Quirino Semijoias" />
+      </div>
+
+      <!-- Carrinho (extrema direita) -->
+      <!--- Apagar o campo para substituir--> 
+      <button class="nav-top__cart" id="openCartTop" type="button" aria-label="Abrir carrinho">
+        🛍️ <span class="badge" id="cartCountTop">0</span>
       </button>
-    </div>
+    </header> 
 
-    <header class="brand" style="padding-top:14px;">
-      <img class="brand__logo" src="imagens/logo_2.png" alt="Veridiana Quirino Semijoias" />
-      <select class="category-select" onchange="trocarCategoria(this.value)">
-        <option value="" disabled selected>Selecione a categoria</option>
-        <option value="brincos">Brincos</option>
-        <option value="tornozeleiras">Tornozeleiras</option>
-        <option value="colares">Colares</option>
-        <option value="pulseiras">Pulseiras</option>
-        <option value="exclusivos">Exclusivos</option>
-      </select>
-    </header>
+    <!-- Select de categoria (abaixo do menu superior) -->
+    <!---Alterar o Select para objeto circular-----> 
+    <select class="category-select" onchange="trocarCategoria(this.value)">
+      <option value="" disabled selected>Selecione a categoria</option>
+      <option value="brincos">Brincos</option>
+      <option value="tornozeleiras">Tornozeleiras</option>
+      <option value="colares">Colares</option>
+      <option value="pulseiras">Pulseiras</option>
+      <option value="exclusivos">Exclusivos</option>
+    </select>
 
+    <!-- Título da página (categoria atual) -->
+    <!--Adicionar JS para alternar nomes de acordo com a categoria locada-->
     <h2 class="page-title">Brincos</h2>
+
+    <!-- Texto de orientação para o usuário (UX) -->
     <p class="page-sub">TOQUE NO PRODUTO PARA VER A FOTO E OS DETALHES</p>
 
+    <!-- Área onde o JS vai "injetar" os cards do catálogo -->
     <section class="catalog" id="catalog"></section>
 
+    <!-- Botão flutuante de carrinho (fica fixo no canto inferior direito) -->
     <button class="fab" id="openCartFab" type="button">
       🛍️ Carrinho <span class="badge" id="cartCountFab">0</span>
     </button>
 
-    <!-- Modal -->
+    <!-- MODAL (overlay + caixa central) para ver detalhes do produto -->
     <div class="overlay" id="overlay">
       <div class="modal" role="dialog" aria-modal="true" aria-label="Detalhes do produto">
+
+        <!-- Área da imagem do produto dentro do modal -->
         <div style="position:relative;">
+          <!-- Imagem do produto (o JS troca src/alt dinamicamente) -->
           <img class="modal__img" id="modalImg" alt="">
+
+          <!-- Botão de fechar modal -->
           <button class="close" id="closeModal" type="button">✕</button>
         </div>
 
+        <!-- Conteúdo textual do modal -->
         <div class="modal__content">
+          <!-- Nome do produto -->
           <div class="modal__title" id="modalTitle"></div>
+
+          <!-- Linha com ID -->
           <div class="modal__row"><span>ID</span><span id="modalId"></span></div>
+
+          <!-- Linha com Material -->
           <div class="modal__row"><span>Material</span><span id="modalMaterial"></span></div>
+
+          <!-- Preço do produto -->
           <div class="modal__price" id="modalPrice"></div>
         </div>
 
+        <!-- Botões de ação do modal -->
         <div class="actions">
+          <!-- Adiciona ao carrinho -->
           <button class="btn btn-primary" id="addToCartBtn" type="button">Adicionar ao carrinho</button>
+
+          <!-- Fecha o modal -->
           <button class="btn btn-outline" id="continueBtn" type="button">Continuar olhando</button>
+
+          <!-- Link do WhatsApp (o JS coloca o href com mensagem pronta) -->
           <a class="btn btn-whats" id="buyWhatsBtn" target="_blank" rel="noopener">Reservar pelo WhatsApp</a>
         </div>
       </div>
     </div>
 
-    <!-- Drawer -->
+    <!-- DRAWER do carrinho (overlay + painel que sobe por baixo) -->
     <div class="drawer" id="drawer">
       <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Carrinho">
+
+        <!-- Título do carrinho -->
         <div class="drawer__title">Seu carrinho</div>
+
+        <!-- Texto explicando o fluxo do WhatsApp -->
         <p class="note">
           Adicione peças e continue olhando. Para reservar, finalize pelo WhatsApp com a mensagem automática.
         </p>
 
+        <!-- Lista do carrinho (o JS renderiza os itens aqui) -->
         <div id="cartList"></div>
 
+        <!-- Total do carrinho -->
         <div class="total">
           <span>Total</span>
           <span id="cartTotal">R$ 0,00</span>
         </div>
 
+        <!-- Botões do carrinho -->
         <div class="actions" style="padding:0;">
+          <!-- Link WhatsApp com resumo do carrinho -->
           <a class="btn btn-whats" id="checkoutWhats" target="_blank" rel="noopener">Finalizar reserva pelo WhatsApp</a>
+
+          <!-- Fecha o carrinho -->
           <button class="btn btn-outline" id="closeCart" type="button">Continuar olhando</button>
         </div>
       </div>
     </div>
 
+    <!-- Rodapé da página -->
     <footer class="footer" aria-label="Rodapé">
       <div class="footer__brand">
         <span class="footer__name">Veridiana <strong>Quirino</strong></span>
@@ -96,9 +151,11 @@
     </footer>
   </main>
 
-  <!-- IMPORTANTE: data primeiro, app depois -->
-  <script src="data/brincos.js"></script>
+  <!-- IMPORTANTE: primeiro carrega os dados (produtos), depois o app -->
+  <script src="data/logica.js"></script>
   <script src="./app.js"></script>
+
+  <!-- Inicializa o catálogo após os scripts carregarem -->
   <script>
     initCatalog();
   </script>
